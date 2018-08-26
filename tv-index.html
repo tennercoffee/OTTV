@@ -3,7 +3,7 @@
 	    <title>TV-HOST</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 		<link rel="shortcut icon" href="https://guestcenter.opentable.com/Content/img/icons/favicon.ico?v=gc-microapp-login-101" />
 		<script>
 			var profile_name;
@@ -47,20 +47,13 @@
 				document.getElementById('popup_alert').style.display = "block";
 			}
 
-
-
-
-
-
       function saveEditForm(id) {
         //here we need to save the form input to cookies
 				var stream = 'custom_stream_' + id;
 				var url = document.getElementById('stream_edit_name_' + id);
-				Cookies.set(stream,url);
+				Cookies.set(stream,url, {expires:90});
 
 				// Cookies.set("Lead.LeadSource", leadSourceFromURL, {expires:90});
-
-
 
         document.getElementById('stream_edit_name_' + id).style.display = "none";
         document.getElementById('custom_stream_' + id).style.display = "block";
