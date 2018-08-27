@@ -50,7 +50,7 @@
       function saveEditForm(id) {
         //here we need to save the form input to cookies
 				var stream = 'custom_stream_' + id;
-				var url = document.getElementById('stream_edit_name_' + id);
+				var url = document.getElementById('stream_edit_name_' + id).value;
 				Cookies.set(stream,url, {expires:90});
 
 				// Cookies.set("Lead.LeadSource", leadSourceFromURL, {expires:90});
@@ -67,28 +67,31 @@
         document.getElementById('stream_edit_button_' + id).style.display = "none";
 
       }
-      function loadStream1(url) {
-        form_results_iframe1.location.href = url;
+			function loadStream(id,url) {
+				if (id == '1') {
+					form_results_iframe1.location.href = url;
+				} else if (id == '2') {
+					form_results_iframe2.location.href = url;
+				} else if (id == '3') {
+					collapsible.location.href = url;
+				} else {
+					console.log('err');
+				}
+			}
+      function toggleCustomStream(id) {
+				var url;
+
+				if (id == '3') {
+					document.getElementById('form_results_iframe3').style.display = 'block';
+				}
+
+				if(document.getElementById('stream_edit_name_' + id).value == ''  && Cookies.get('custom_stream_' + id) != null) {
+					url = Cookies.get('custom_stream_' + id);
+				} else if (document.getElementById('stream_edit_name_' + id).value != '') {
+					url = document.getElementById('stream_edit_name_' + id).value
+				}
+				loadStream(id,url);
       }
-      function loadStream2(url) {
-        form_results_iframe2.location.href = url;
-      }
-      function showCustomStream(id) {
-				//get url
-				// var url = Cookies.get(('custom_stream_1').value);
-				//open stream
-        var url = document.getElementById('stream_edit_name_' + id).value;
-        if (url !== 'undefined') {
-  				loadStream2(url);
-        }
-      }
-
-
-
-
-
-
-
 		</script>
 		<style>
 		/*
@@ -409,13 +412,21 @@
 			clear: both;
 		}
 		.results {
-		    display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
+		  display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
 			flex: 1;
 			background-color: #EEE;
 			overflow:auto;
 			margin-right: 15px;
+		}
+		.results_collapsible {
+			position: absolute;
+	    bottom: 0;
+	    right: 5px;;
+	    height: 37%;
+	    width: 49%;
+			display: none;
 		}
     #right_dropdown {
       position:absolute;
@@ -628,26 +639,38 @@
             <div class="dropdown" id="left_dropdown">
       			  <button class="dropbtn">Choose A Stream</button>
       			  <div class="dropdown-content">
-      				  <a onclick="loadStream1('http://www.youtube.com/')">YouTube</a>
-                <a onclick="loadStream1('https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</a>
-                <a onclick="loadStream1('https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
-                <a onclick="loadStream1('http://status.opentable.com/')">OpenTable Status</a>
-								<a onclick="loadStream1('http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
-      			  </div>
+      				  <a onclick="loadStream('1','http://www.youtube.com/')">YouTube</a>
+                <a onclick="loadStream('1','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</a>
+                <a onclick="loadStream('1','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
+                <a onclick="loadStream('1','http://status.opentable.com/')">OpenTable Status</a>
+								<a onclick="loadStream('1','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
+								<div class="custom_stream">
+                  <a onclick="showCustomStream('1')" id="custom_stream_1">CUSTOM</a>
+                  <input class="stream_edit_field" type="text" id="stream_edit_name_1"></input>
+									<div class="stream_save_button" onclick="saveEditForm('1')">SAVE</div>
+                  <div class="stream_edit_button" onclick="showEditForm('1')" id="stream_edit_button_1">EDIT</div>
+                </div>
+							</div>
       			</div>
             <div class="dropdown" id="right_dropdown">
       			  <button class="dropbtn">Choose A Stream</button>
       			  <div class="dropdown-content">
-                <a onclick="loadStream2('http://www.youtube.com/')">YouTube</a>
-                <a onclick="loadStream2('https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</a>
-                <a onclick="loadStream2('https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
-                <a onclick="loadStream2('http://status.opentable.com/')">OpenTable Status</a>
-								<a onclick="loadStream2('http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
+                <a onclick="loadStream('2','http://www.youtube.com/')">YouTube</a>
+                <a onclick="loadStream('2','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</a>
+                <a onclick="loadStream('2','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
+                <a onclick="loadStream('2','http://status.opentable.com/')">OpenTable Status</a>
+								<a onclick="loadStream('2','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
                 <div class="custom_stream">
-                  <a onclick="showCustomStream('1')" id="custom_stream_1">open_test</a>
-                  <input class="stream_edit_field" type="text" id="stream_edit_name_1"></input>
-									<div class="stream_save_button" onclick="saveEditForm('1')">save</div>
-                  <div class="stream_edit_button" onclick="showEditForm('1')" id="stream_edit_button_1">edit</div>
+                  <a onclick="toggleCustomStream('2')" id="custom_stream_2">CUSTOM</a>
+                  <input class="stream_edit_field" type="text" id="stream_edit_name_2"></input>
+									<div class="stream_save_button" onclick="saveEditForm('2')">SAVE</div>
+                  <div class="stream_edit_button" onclick="showEditForm('2')" id="stream_edit_button_2">EDIT</div>
+                </div>
+								<div class="custom_stream">
+                  <a onclick="toggleCustomStream('3')" id="custom_stream_3">COLLAPSIBLE</a>
+                  <input class="stream_edit_field" type="text" id="stream_edit_name_3"></input>
+									<div class="stream_save_button" onclick="saveEditForm('3')">SAVE</div>
+                  <div class="stream_edit_button" onclick="showEditForm('3')" id="stream_edit_button_3">EDIT</div>
                 </div>
       			  </div>
       			</div>
@@ -672,11 +695,13 @@
 
 								<!--right-side-->
 
-			<div id="tracker_map" class="map"></div>
-
 			<iframe class="results" name="form_results_iframe2" id="form_results_iframe2">
 			</iframe>
 
+								<!--collaspable-->
+
+			<iframe class="results_collapsible" name="collapsible" id="form_results_iframe3">
+			</iframe>
 
 		</div>
 		<div class="footer">
