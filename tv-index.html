@@ -75,6 +75,7 @@
 
 				if (id == '3' && document.getElementById('form_results_iframe3').style.display == 'none') {
 					document.getElementById('form_results_iframe3').style.display = 'block';
+					document.getElementById('collapsible_dropdown').style.display = 'block';
 				} else {
 					document.getElementById('form_results_iframe3').style.display = 'none';
 				}
@@ -151,6 +152,15 @@
 			float: left;
 			width: 65%;
 			margin-top: 6px;
+		}
+		#collapsible_dropdown {
+			display:none;
+			position: absolute;
+			right: 0;
+		}
+		#collapsible_dropdown_content {
+			position:absolute;
+			right:0;
 		}
 		.container {
 			border-radius: 5px;
@@ -420,6 +430,7 @@
 	    height: 37%;
 	    width: 49%;
 			display: none;
+			background-color:white;
 		}
     #right_dropdown {
       position:absolute;
@@ -630,7 +641,7 @@
 	</head>
 	<body>
 	    <header>
-	        <div class="header-flex">
+	        <div class="header-flex">https://www.merriam-webster.com/word-of-the-day
             <div class="dropdown" id="left_dropdown">
       			  <button class="dropbtn">Choose A Stream</button>
       			  <div class="dropdown-content">
@@ -639,6 +650,7 @@
                 <a onclick="loadStream('1','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
                 <a onclick="loadStream('1','http://status.opentable.com/')">OpenTable Status</a>
 								<a onclick="loadStream('1','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
+								<a onclick="loadStream('1','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</a>
 								<div class="custom_stream">
                   <a onclick="toggleCustomStream('1')" id="custom_stream_1">Custom Frame 1</a>
                   <input class="stream_edit_field" type="text" id="stream_edit_name_1"></input>
@@ -655,7 +667,8 @@
                 <a onclick="loadStream('2','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
                 <a onclick="loadStream('2','http://status.opentable.com/')">OpenTable Status</a>
 								<a onclick="loadStream('2','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
-                <div class="custom_stream">
+								<a onclick="loadStream('2','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</a>
+								<div class="custom_stream">
                   <a onclick="toggleCustomStream('2')" id="custom_stream_2">Custom Frame 2</a>
                   <input class="stream_edit_field" type="text" id="stream_edit_name_2"></input>
 									<div class="stream_save_button" id="custom_save_button_2" onclick="saveEditForm('2')">SAVE</div>
@@ -663,11 +676,25 @@
                 </div>
 								<div class="custom_stream">
                   <a onclick="toggleCustomStream('3')" id="custom_stream_3">COLLAPSIBLE</a>
+                </div>
+      			  </div>
+      			</div>
+						<div class="dropdown" id="collapsible_dropdown">
+      			  <button class="dropbtn">Choose A Stream</button>
+      			  <div class="dropdown-content" id="collapsible_dropdown_content">
+      				  <a onclick="loadStream('3','http://www.youtube.com/')">YouTube</a>
+                <a onclick="loadStream('3','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</a>
+                <a onclick="loadStream('3','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
+                <a onclick="loadStream('3','http://status.opentable.com/')">OpenTable Status</a>
+								<a onclick="loadStream('3','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
+								<a onclick="loadStream('3','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</a>
+								<div class="custom_stream">
+                  <a onclick="toggleCustomStream('3')" id="custom_stream_3">Custom Frame 3</a>
                   <input class="stream_edit_field" type="text" id="stream_edit_name_3"></input>
 									<div class="stream_save_button" id="custom_save_button_3" onclick="saveEditForm('3')">SAVE</div>
                   <div class="stream_edit_button" onclick="showEditForm('3')" id="stream_edit_button_3">EDIT</div>
                 </div>
-      			  </div>
+							</div>
       			</div>
   				<div class="app-logo">
   					<img src="http://zerorestaurantcharleston.com/wp-content/uploads/sites/3/2016/04/OpenTableLogoWhite-e1473958158307.png" alt="OT_logo" class="logo">
