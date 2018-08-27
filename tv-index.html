@@ -12,7 +12,6 @@
 				document.getElementById("popup_alert").style.display = "none";
 			}
 			function closeSidebar() {
-				//close the sidebar
 				document.getElementById("sidebar").style.display = "none";
 				document.getElementById("sidebar_menu").style.display = "none";
 				document.getElementById("main_view_pane").style.opacity = "1";
@@ -30,14 +29,10 @@
 				return xhr;
 			}
 			function openSidebar() {
-				//open the sidebar
-				//if(profile_name !== undefined) {
-					document.getElementById("sidebar").style.display = "block";
-					document.getElementById("sidebar_menu").style.display = "block";
-					document.getElementById("main_view_pane").style.opacity = "0.5";
-				//} else {
-					//showAlertBox("Please Sign In First");
-				//}
+				document.getElementById("sidebar").style.display = "block";
+				document.getElementById("sidebar_menu").style.display = "block";
+				document.getElementById("main_view_pane").style.opacity = "0.5";
+
 			}
 			function reloadPage() {
 				document.location.reload();
@@ -48,12 +43,9 @@
 			}
 
       function saveEditForm(id) {
-        //here we need to save the form input to cookies
 				var stream = 'custom_stream_' + id;
 				var url = document.getElementById('stream_edit_name_' + id).value;
 				Cookies.set(stream,url, {expires:90});
-
-				// Cookies.set("Lead.LeadSource", leadSourceFromURL, {expires:90});
 
         document.getElementById('stream_edit_name_' + id).style.display = "none";
         document.getElementById('custom_stream_' + id).style.display = "block";
@@ -166,9 +158,6 @@
 			padding: 20px;
 		}
     .custom_stream {
-      height: 50px;
-      padding: 5px;
-      margin: 5px;
     }
 		#doc-text {
 			float:left;
@@ -199,9 +188,11 @@
 		}
 		.dropdown-content a {
 			color: black;
-			padding: 12px 16px;
+			padding: 12px 5px;
 			text-decoration: none;
 			display: block;
+			width: 60%;
+	    float: left;
 		}
 		.dropdown-content a:hover {
 			background-color: #f1f1f1;
@@ -501,8 +492,9 @@
 			color:#23496d;
 		}
     .stream_edit_button {
-      float:left;
+      float:right;
 			color:black;
+			padding: 10px 0;
     }
     .stream_edit_field {
       display:none;
