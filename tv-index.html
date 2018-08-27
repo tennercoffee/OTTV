@@ -65,7 +65,7 @@
         document.getElementById('stream_edit_name_' + id).style.display = "block";
         document.getElementById('custom_stream_' + id).style.display = "none";
         document.getElementById('stream_edit_button_' + id).style.display = "none";
-
+				document.getElementById('custom_save_button_' + id).style.display = "block";
       }
 			function loadStream(id,url) {
 				if (id == '1') {
@@ -81,8 +81,10 @@
       function toggleCustomStream(id) {
 				var url;
 
-				if (id == '3') {
+				if (id == '3' && document.getElementById('form_results_iframe3').style.display == 'none') {
 					document.getElementById('form_results_iframe3').style.display = 'block';
+				} else {
+					document.getElementById('form_results_iframe3').style.display = 'none';
 				}
 
 				if(document.getElementById('stream_edit_name_' + id).value == ''  && Cookies.get('custom_stream_' + id) != null) {
@@ -508,6 +510,7 @@
 		.stream_save_button {
 			color:#da3743;
 			float:right;
+			display: none;
 		}
 		.submit-button {
 			float:right;
@@ -645,9 +648,9 @@
                 <a onclick="loadStream('1','http://status.opentable.com/')">OpenTable Status</a>
 								<a onclick="loadStream('1','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
 								<div class="custom_stream">
-                  <a onclick="showCustomStream('1')" id="custom_stream_1">CUSTOM</a>
+                  <a onclick="toggleCustomStream('1')" id="custom_stream_1">CUSTOM</a>
                   <input class="stream_edit_field" type="text" id="stream_edit_name_1"></input>
-									<div class="stream_save_button" onclick="saveEditForm('1')">SAVE</div>
+									<div class="stream_save_button" id="custom_save_button_1" onclick="saveEditForm('1')">SAVE</div>
                   <div class="stream_edit_button" onclick="showEditForm('1')" id="stream_edit_button_1">EDIT</div>
                 </div>
 							</div>
@@ -663,13 +666,13 @@
                 <div class="custom_stream">
                   <a onclick="toggleCustomStream('2')" id="custom_stream_2">CUSTOM</a>
                   <input class="stream_edit_field" type="text" id="stream_edit_name_2"></input>
-									<div class="stream_save_button" onclick="saveEditForm('2')">SAVE</div>
+									<div class="stream_save_button" id="custom_save_button_2" onclick="saveEditForm('2')">SAVE</div>
                   <div class="stream_edit_button" onclick="showEditForm('2')" id="stream_edit_button_2">EDIT</div>
                 </div>
 								<div class="custom_stream">
                   <a onclick="toggleCustomStream('3')" id="custom_stream_3">COLLAPSIBLE</a>
                   <input class="stream_edit_field" type="text" id="stream_edit_name_3"></input>
-									<div class="stream_save_button" onclick="saveEditForm('3')">SAVE</div>
+									<div class="stream_save_button" id="custom_save_button_3" onclick="saveEditForm('3')">SAVE</div>
                   <div class="stream_edit_button" onclick="showEditForm('3')" id="stream_edit_button_3">EDIT</div>
                 </div>
       			  </div>
