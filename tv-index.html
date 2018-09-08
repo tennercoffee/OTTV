@@ -87,6 +87,21 @@
 				}
 				loadStream(id,url);
       }
+			function toggleElement(x) {
+			  console.log(x);
+			  if (document.getElementById(x).style.display != "none"){
+			    document.getElementById(x).style.display = "none";
+			  } else {
+			    document.getElementById(x).style.display = "flex";
+			  }
+			}
+
+			function toggleLeftSide() {
+			  toggleElement("form_results_iframe1");
+			}
+			  function toggleRightSide() {
+			  toggleElement("form_results_iframe2");
+			}
 		</script>
 		<style>
 		/*
@@ -670,6 +685,7 @@
 									<div class="stream_save_button" id="custom_save_button_1" onclick="saveEditForm('1')">SAVE</div>
                   <div class="stream_edit_button" onclick="showEditForm('1')" id="stream_edit_button_1">EDIT</div>
                 </div>
+								<a onclick="toggleRightSide()" class="primary_select_button" id="left_primary_button">Make Primary</a>
 							</div>
       			</div>
             <div class="dropdown" id="right_dropdown">
@@ -689,6 +705,7 @@
 									<div class="stream_save_button" id="custom_save_button_2" onclick="saveEditForm('2')">SAVE</div>
                   <div class="stream_edit_button" onclick="showEditForm('2')" id="stream_edit_button_2">EDIT</div>
                 </div>
+								<a onclick="toggleLeftSide()" class="primary_select_button" id="right_primary_button">Make Primary</a>
 								<div class="custom_stream">
                   <a onclick="toggleCustomStream('3')" id="custom_stream_3">COLLAPSIBLE</a>
                 </div>
