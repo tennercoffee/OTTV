@@ -6,19 +6,17 @@
 		<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 		<link rel="shortcut icon" href="https://guestcenter.opentable.com/Content/img/icons/favicon.ico?v=gc-microapp-login-101" />
 		<script>
-			var profile_name;
-			var val;
+			var profile_name,val1,val2;
+			document.getElementById('stream_primary_selector1').checked = 'null';
+			document.getElementById('stream_primary_selector2').checked = 'null';
 
 			function showStreamSelector(id) {
-				document.getElementById('stream_primary_selector1').value = "off";
-				document.getElementById('stream_primary_selector2').value = "off";
-
-
 				if(document.getElementById("stream_selector_" + id).style.display = "none") {
 					document.getElementById('form_results_iframe1').style.display = "none";
 					document.getElementById('form_results_iframe2').style.display = "none";
 					document.getElementById('form_results_iframe3').style.display = "none";
 					document.getElementById("stream_selector_" + id).style.display = "flex";
+
 				} else {
 					document.getElementById("stream_selector_" + id).style.display = "none";
 				}
@@ -74,43 +72,37 @@
 				document.getElementById('custom_save_button_' + id).style.display = "block";
       }
 			function loadStream(id,url) {
-				document.getElementById('stream_selector_' + id).style.display = "none";
-				var val;
-				if(id != '3') {
-					val = document.getElementById('stream_primary_selector' + id).value;
-				}
 				var iframe1 = document.getElementById('form_results_iframe1');
 				var iframe2 = document.getElementById('form_results_iframe2');
 				var iframe3 = document.getElementById('form_results_iframe3');
 				if (id == '1') {
-					if (val = 'off') {
-						form_results_iframe1.location.href = url;
-						iframe1.style.display = 'flex';
+					if (document.getElementById('stream_primary_selector1').checked == 'null') {
 						iframe2.style.display = 'flex';
 					} else {
-						form_results_iframe1.location.href = url;
-						iframe1.style.display = 'flex';
 						iframe2.style.display = 'none';
-						iframe3.style.display = 'none';
 					}
+					iframe1.style.display = 'flex';
+					form_results_iframe1.location.href = url;
 				} else if (id == '2') {
-					if (val = 'off') {
-						form_results_iframe2.location.href = url;
+					if (document.getElementById('stream_primary_selector2').checked == 'null') {
 						iframe1.style.display = 'flex';
-						iframe2.style.display = 'flex';
 					} else {
-						form_results_iframe2.location.href = url;
 						iframe1.style.display = 'none';
-						iframe3.style.display = 'none';
 					}
+					iframe2.style.display = 'flex';
+					form_results_iframe2.location.href = url;
 				} else if (id == '3') {
-					collapsible.location.href = url;
 					iframe1.style.display = 'flex';
 					iframe2.style.display = 'flex';
 					iframe3.style.display = 'flex';
+					collapsible.location.href = url;
 				} else {
 					console.log('err');
 				}
+
+				document.getElementById('stream_selector_' + id).style.display = "none";
+
+				val = 'off';
 				Cookies.set('stream' + id, url, {expires:1});
 			}
       function toggleCustomStream(id) {
@@ -934,7 +926,7 @@
 					<div class="stream" id="" onclick="loadStream('2','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</div>
 					<div class="stream" id="" onclick="loadStream('2','https://www.moodica.com')">Moodica</div>
 					<div class="stream" style="border-color:#da3743">
-						<a onclick="toggleCustomStream('2')" id="custom_stream_2">Custom Frame 2</a>
+						<a onclick="toggleCustomStream('2')" class="customs_stream_name" id="custom_stream_2">Custom Frame 2</a>
 						<input class="stream_edit_field" type="text" id="stream_edit_url_2"></input>
 						<div class="stream_save_button" id="custom_save_button_2" onclick="saveEditForm('2')">SAVE</div>
 						<div class="stream_edit_button" onclick="showEditForm('2')" id="stream_edit_button_2">EDIT</div>
@@ -953,7 +945,7 @@
 					<div class="stream" id="" onclick="loadStream('3','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</div>
 					<div class="stream" id="" onclick="loadStream('3','https://www.moodica.com')">Moodica</div>
 					<div class="stream" style="border-color:#da3743">
-						<a onclick="toggleCustomStream('3')" id="custom_stream_3">Custom Frame 3</a>
+						<a onclick="toggleCustomStream('3')" class="customs_stream_name" id="custom_stream_3">Custom Frame 3</a>
 						<input class="stream_edit_field" type="text" id="stream_edit_url_3"></input>
 						<div class="stream_save_button" id="custom_save_button_3" onclick="saveEditForm('3')">SAVE</div>
 						<div class="stream_edit_button" onclick="showEditForm('3')" id="stream_edit_button_3">EDIT</div>
