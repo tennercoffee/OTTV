@@ -7,23 +7,21 @@
 		<link rel="shortcut icon" href="https://guestcenter.opentable.com/Content/img/icons/favicon.ico?v=gc-microapp-login-101" />
 		<script>
 			var profile_name;
+			var val;
 
 			function showStreamSelector(id) {
+				document.getElementById('stream_primary_selector1').value = "off";
+				document.getElementById('stream_primary_selector2').value = "off";
+
+
 				if(document.getElementById("stream_selector_" + id).style.display = "none") {
 					document.getElementById('form_results_iframe1').style.display = "none";
 					document.getElementById('form_results_iframe2').style.display = "none";
 					document.getElementById('form_results_iframe3').style.display = "none";
-
 					document.getElementById("stream_selector_" + id).style.display = "flex";
 				} else {
 					document.getElementById("stream_selector_" + id).style.display = "none";
 				}
-				if(Cookies.get('stream' + id) != '') {
-
-				}
-
-
-
 			}
 			function closePopupMessage() {
 				document.getElementById("popup_alert").style.display = "none";
@@ -77,18 +75,39 @@
       }
 			function loadStream(id,url) {
 				document.getElementById('stream_selector_' + id).style.display = "none";
-				document.getElementById('form_results_iframe' + id).style.display = "flex";
+				var val;
+				if(id != '3') {
+					val = document.getElementById('stream_primary_selector' + id).value;
+				}
+				var iframe1 = document.getElementById('form_results_iframe1');
+				var iframe2 = document.getElementById('form_results_iframe2');
+				var iframe3 = document.getElementById('form_results_iframe3');
 				if (id == '1') {
-					form_results_iframe1.location.href = url;
-					document.getElementById('form_results_iframe2').style.display = 'flex';
+					if (val = 'off') {
+						form_results_iframe1.location.href = url;
+						iframe1.style.display = 'flex';
+						iframe2.style.display = 'flex';
+					} else {
+						form_results_iframe1.location.href = url;
+						iframe1.style.display = 'flex';
+						iframe2.style.display = 'none';
+						iframe3.style.display = 'none';
+					}
 				} else if (id == '2') {
-					form_results_iframe2.location.href = url;
-					document.getElementById('form_results_iframe1').style.display = 'flex';
+					if (val = 'off') {
+						form_results_iframe2.location.href = url;
+						iframe1.style.display = 'flex';
+						iframe2.style.display = 'flex';
+					} else {
+						form_results_iframe2.location.href = url;
+						iframe1.style.display = 'none';
+						iframe3.style.display = 'none';
+					}
 				} else if (id == '3') {
 					collapsible.location.href = url;
-					document.getElementById('form_results_iframe1').style.display = 'flex';
-					document.getElementById('form_results_iframe2').style.display = 'flex';
-					document.getElementById('form_results_iframe3').style.display = 'flex';
+					iframe1.style.display = 'flex';
+					iframe2.style.display = 'flex';
+					iframe3.style.display = 'flex';
 				} else {
 					console.log('err');
 				}
@@ -661,7 +680,7 @@
 	    font-size: 25px;
     }
 		.stream_grid {
-			padding: 10px 10% 20px 12%;
+			padding: 10px 9% 20px 11%;
 			margin-top:100px;
 			color:white;
 			font-size:25px;
@@ -876,7 +895,10 @@
 			</iframe>
 			<div class="stream_selector" id="stream_selector_1">
 				<div class="stream_selector_title">Choose Your Stream for Frame 1</div>
-				<a onclick="toggleRightSide()" class="stream_primary_selector" id="left_primary_button">Make Primary</a>
+				<div class="stream_primary_selector" id="left_primary_button">Make Primary</div>
+				<label class="switch">
+				  <input type="checkbox" id="stream_primary_selector1" class="stream_primary_selector" style="position:absolute;top: 30px;right: 180px;">
+				</label>
 				<div class="stream_grid">
 					<div class="stream" id="" onclick="loadStream('1','http://www.youtube.com/')">YouTube</div>
 					<div class="stream" id="" onclick="loadStream('1','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</div>
@@ -898,7 +920,10 @@
 			</div>
 			<div class="stream_selector" id="stream_selector_2">
 				<div class="stream_selector_title">Choose Your Stream for Frame 2</div>
-				<a onclick="toggleLeftSide()" class="stream_primary_selector" id="right_primary_button">Make Primary</a>
+				<div class="stream_primary_selector" id="left_primary_button">Make Primary</div>
+				<label class="switch">
+					<input type="checkbox" id="stream_primary_selector2" class="stream_primary_selector" style="position:absolute;top: 30px;right: 180px;">
+				</label>
 				<div class="stream_grid">
 					<div class="stream" id="" onclick="loadStream('2','http://www.youtube.com/')">YouTube</div>
 					<div class="stream" id="" onclick="loadStream('2','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</div>
