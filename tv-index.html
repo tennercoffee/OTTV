@@ -8,6 +8,25 @@
 		<script>
 			var profile_name;
 
+			function showStreamSelector(id) {
+				if(document.getElementById("stream_selector_" + id).style.display = "none") {
+					document.getElementById("stream_selector_" + id).style.display = "flex";
+				} else {
+					document.getElementById("stream_selector_" + id).style.display = "none";
+				}
+				toggleElement('form_results_iframe1');
+				toggleElement('form_results_iframe2');
+				if(document.getElementById('form_results_iframe3').style.display = "none") {
+					// toggleElement('form_results_iframe3');
+
+				}
+
+				//cause the non-active dropdown buttons to grey out
+
+
+
+
+			}
 			function closePopupMessage() {
 				document.getElementById("popup_alert").style.display = "none";
 			}
@@ -41,31 +60,37 @@
 				document.getElementById('popup_message').innerHTML = alert;
 				document.getElementById('popup_alert').style.display = "block";
 			}
-
       function saveEditForm(id) {
 				var stream = 'custom_stream_' + id;
-				var url = document.getElementById('stream_edit_name_' + id).value;
+				var url = document.getElementById('stream_edit_url_' + id).value;
 				Cookies.set(stream,url, {expires:90});
 
-        document.getElementById('stream_edit_name_' + id).style.display = "none";
+        document.getElementById('stream_edit_url_' + id).style.display = "none";
         document.getElementById('custom_stream_' + id).style.display = "block";
         document.getElementById('stream_edit_button_' + id).style.display = "block";
 				document.getElementById('custom_save_button_' + id).style.display = "none";
       }
       function showEditForm(id) {
         //show the edit form and hide the label(<a />)
-        document.getElementById('stream_edit_name_' + id).style.display = "block";
+        document.getElementById('stream_edit_url_' + id).style.display = "block";
         document.getElementById('custom_stream_' + id).style.display = "none";
         document.getElementById('stream_edit_button_' + id).style.display = "none";
 				document.getElementById('custom_save_button_' + id).style.display = "block";
       }
 			function loadStream(id,url) {
+				document.getElementById('stream_selector_' + id).style.display = "none";
+				document.getElementById('form_results_iframe' + id).style.display = "flex";
 				if (id == '1') {
 					form_results_iframe1.location.href = url;
+					// document.getElementById('form_results_iframe2').style.display = 'flex';
 				} else if (id == '2') {
 					form_results_iframe2.location.href = url;
+					document.getElementById('form_results_iframe1').style.display = 'flex';
 				} else if (id == '3') {
 					collapsible.location.href = url;
+					document.getElementById('form_results_iframe3').style.display = 'flex';
+					document.getElementById('form_results_iframe1').style.display = 'flex';
+					document.getElementById('form_results_iframe2').style.display = 'flex';
 				} else {
 					console.log('err');
 				}
@@ -80,10 +105,10 @@
 					document.getElementById('form_results_iframe3').style.display = 'none';
 				}
 
-				if(document.getElementById('stream_edit_name_' + id).value == ''  && Cookies.get('custom_stream_' + id) != null) {
+				if(document.getElementById('stream_edit_url_' + id).value == ''  && Cookies.get('custom_stream_' + id) != null) {
 					url = Cookies.get('custom_stream_' + id);
-				} else if (document.getElementById('stream_edit_name_' + id).value != '') {
-					url = document.getElementById('stream_edit_name_' + id).value
+				} else if (document.getElementById('stream_edit_url_' + id).value != '') {
+					url = document.getElementById('stream_edit_url_' + id).value
 				}
 				loadStream(id,url);
       }
@@ -95,11 +120,10 @@
 			    document.getElementById(x).style.display = "flex";
 			  }
 			}
-
 			function toggleLeftSide() {
 			  toggleElement("form_results_iframe1");
 			}
-			  function toggleRightSide() {
+			function toggleRightSide() {
 			  toggleElement("form_results_iframe2");
 			}
 		</script>
@@ -316,9 +340,10 @@
 			margin-top: 6px;
 		}
 		#collapsible_dropdown {
-			display:none;
 			position: absolute;
 			right: 0;
+			width: 100px;
+			display:none;
 		}
 		#collapsible_dropdown_content {
 			position:absolute;
@@ -339,7 +364,8 @@
 			background-color: #4F98DB;
 			color: white;
 			padding: 16px;
-			font-size: 16px;
+			line-height: 23px;
+			font-size: 50px;
 			border: none;
 			cursor: pointer;
 			width: 100%;
@@ -348,36 +374,8 @@
 			position: relative;
 			display: inline-block;
 			margin-bottom: 10px;
-		}
-		.dropdown-content {
-			display: none;
-			position: absolute;
-			background-color: #f9f9f9;
-			min-width: 160px;
-			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-			z-index: 1;
-			width: 200px;
-			width: 250px;
-			font-size: 20px;
-			padding:20px;
-		}
-		.dropdown-content a {
-			color: black;
-			padding: 12px 5px;
-			text-decoration: none;
-			display: block;
-			width: 60%;
-	    float: left;
-		}
-		.dropdown-content a:hover {
-			background-color: #f1f1f1;
-			cursor:pointer;
-		}
-		.dropdown:hover .dropdown-content {
-			display: block;
-		}
-		.dropdown:hover .dropbtn {
-			background-color: #4f82db;
+			width:200px;
+			font-size: 40px;
 		}
 		.footer {
 		    position: fixed;
@@ -388,36 +386,8 @@
 		    border-radius:0px;
 			margin-bottom:5px;
 		}
-		form {
-			background-color:#53575E;
-			padding-bottom:3px;
-			border-bottom-width: 2px;
-			border-bottom-color: #FFF;
-			border-bottom-style: solid;
-		}
-		.form-label {
-			padding-bottom:5px;
-			padding-top:5px;
-			text-align:center;
-			text-decoration:underline;
-		}
-		.form-panel {
-		  display: flex;
-		  flex-direction: column;
-			overflow:auto;
-			width: 27%;
-			overflow-x: hidden;
-			padding: 5px;
-			padding-right: 10px;
-			padding-left: 10px;
-			margin-right: 5px;
-			background-color: #53575E;
-    }
 		#form_results_iframe1 {
 			border-right:1px grey solid;
-		}
-		#form-panel2 {
-			display:none;
 		}
 		#form-panel2 .dropdown-content {
 			right:0;
@@ -476,24 +446,17 @@
             flex-wrap: nowrap;
 		}
 		header .right {
-		    display: flex;
-		    justify-content: flex-end;
-		    flex-flow: row nowrap;
-            flex-direction: row;
-            flex-wrap: nowrap;
+	    display: flex;
+	    justify-content: flex-end;
+	    flex-flow: row nowrap;
+      flex-direction: row;
+      flex-wrap: nowrap;
 		}
 		.hidden {
 			display:none;
 		}
 		hr {
 		    width:100%;
-		}
-		.input-date {
-			width:99%;
-			padding: 5px;
-		}
-		.input-number {
-			width:90%
 		}
 		input[type=submit] {
 			background-color: #5fc782;
@@ -519,17 +482,16 @@
 			padding: 12px 12px 12px 0;
 			display: inline-block;
 		}
-    #left_dropdown {
-      position:absolute;
-      left:calc(25% - 100px);
-    }
+		#left_dropdown {
+			left:calc(25% - 100px);
+		}
 		#main_view_pane {
 
 		}
 		.map {
-		    display: none;
-            flex-direction: column;
-            justify-content: flex-end;
+	    display: none;
+      flex-direction: column;
+      justify-content: flex-end;
 			flex: 1;
 			background-color: #EEE;
 			overflow:auto;
@@ -573,10 +535,6 @@
 			position:absolute;
 			top:5px;
 			right: 5px;
-		}
-		.report_form {
-			display:none;
-			text-align:center;
 		}
 		.row {
 			margin-top:5px;
@@ -675,6 +633,19 @@
 			background-color:grey;
 			color:#23496d;
 		}
+		.stream {
+			width: 300px;
+	    padding: 20px;
+	    height: 120px;
+	    border-radius: 5px;
+	    border-style: solid;
+			max-width: 30%;
+	    float: left;
+	    margin: 5px;
+			text-align: center;
+			cursor:pointer;
+			background-color: #464950;
+		}
     .stream_edit_button {
       float:right;
 			color:black;
@@ -683,10 +654,37 @@
     .stream_edit_field {
       display:none;
     }
+		.stream_grid {
+			padding: 10px 10% 20px 12%;
+			margin-top:100px;
+			color:white;
+			font-size:25px;
+		}
+		.stream_primary_selector {
+			position: absolute;
+			top:25px;
+	    right: 25px;
+		}
 		.stream_save_button {
 			color:#da3743;
 			float:right;
 			display: none;
+		}
+		.stream_selector {
+			overflow: auto;
+			width:93%;
+			padding:20px;
+			background-color:black;
+			display:none;
+		}
+		.stream_selector_title {
+			max-width: 100%;
+			width:100%;
+			position:fixed;
+			text-align:center;
+			line-height:25px;
+			font-size: 25px;
+			text-align:left;
 		}
 		.submit-button {
 			float:right;
@@ -798,6 +796,18 @@
 			#form_results_iframe2 {
 				display:none;
 			}
+			#right_dropdown {
+				display:none;
+			}
+			#left_dropdown {
+				left: 25px;
+			}
+			.app-logo {
+				right: 25px;
+			}
+			.stream {
+				padding: 20px 40px;
+			}
 		}
 		@media screen and (min-width: 1200px) {
 			.form-panel {
@@ -809,80 +819,43 @@
 			#form_results_iframe2 {
 				display:flex;
 			}
+			.stream_selector {
+				width:97%;
+			}
+		}
+		@media screen and (min-width: 800px) {
+			.stream_selector {
+				width:97%;
+			}
+			#collapsible_dropdown {
+				display:block;
+			}
+			.stream_primary_selector {
+				font-size: 25px;
+			}
+			.stream_selector_title {
+				font-size:35px;
+			}
 		}
 		</style>
 	</head>
 	<body>
 	    <header>
 	        <div class="header-flex">
-            <div class="dropdown" id="left_dropdown">
-      			  <button class="dropbtn">Choose A Stream</button>
-      			  <div class="dropdown-content">
-      				  <a onclick="loadStream('1','http://www.youtube.com/')">YouTube</a>
-                <a onclick="loadStream('1','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</a>
-                <a onclick="loadStream('1','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
-                <a onclick="loadStream('1','http://status.opentable.com/')">OpenTable Status</a>
-								<a onclick="loadStream('1','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
-								<a onclick="loadStream('1','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</a>
-								<a onclick="loadStream('1','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</a>
-								<a onclick="loadStream('1','https://www.moodica.com')">Moodica</a>
-								<div class="custom_stream">
-                  <a onclick="toggleCustomStream('1')" id="custom_stream_1">Custom Frame 1</a>
-                  <input class="stream_edit_field" type="text" id="stream_edit_name_1"></input>
-									<div class="stream_save_button" id="custom_save_button_1" onclick="saveEditForm('1')">SAVE</div>
-                  <div class="stream_edit_button" onclick="showEditForm('1')" id="stream_edit_button_1">EDIT</div>
-                </div>
-								<a onclick="toggleRightSide()" class="primary_select_button" id="left_primary_button">Make Primary</a>
-							</div>
+            <div class="dropdown" id="left_dropdown" onclick="showStreamSelector('1')">
+      			  <button class="dropbtn">+</button>
       			</div>
-            <div class="dropdown" id="right_dropdown">
-      			  <button class="dropbtn">Choose A Stream</button>
-      			  <div class="dropdown-content">
-                <a onclick="loadStream('2','http://www.youtube.com/')">YouTube</a>
-                <a onclick="loadStream('2','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</a>
-                <a onclick="loadStream('2','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
-                <a onclick="loadStream('2','http://status.opentable.com/')">OpenTable Status</a>
-								<a onclick="loadStream('2','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
-								<a onclick="loadStream('2','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</a>
-								<a onclick="loadStream('2','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</a>
-								<a onclick="loadStream('2','https://www.moodica.com')">Moodica</a>
-								<div class="custom_stream">
-                  <a onclick="toggleCustomStream('2')" id="custom_stream_2">Custom Frame 2</a>
-                  <input class="stream_edit_field" type="text" id="stream_edit_name_2"></input>
-									<div class="stream_save_button" id="custom_save_button_2" onclick="saveEditForm('2')">SAVE</div>
-                  <div class="stream_edit_button" onclick="showEditForm('2')" id="stream_edit_button_2">EDIT</div>
-                </div>
-								<a onclick="toggleLeftSide()" class="primary_select_button" id="right_primary_button">Make Primary</a>
-								<div class="custom_stream">
-                  <a onclick="toggleCustomStream('3')" id="custom_stream_3">COLLAPSIBLE</a>
-                </div>
-      			  </div>
+            <div class="dropdown" id="right_dropdown" onclick="showStreamSelector('2')">
+      			  <button class="dropbtn">+</button>
       			</div>
-						<div class="dropdown" id="collapsible_dropdown">
-      			  <button class="dropbtn">Choose A Stream</button>
-      			  <div class="dropdown-content" id="collapsible_dropdown_content">
-      				  <a onclick="loadStream('3','http://www.youtube.com/')">YouTube</a>
-                <a onclick="loadStream('3','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</a>
-                <a onclick="loadStream('3','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</a>
-                <a onclick="loadStream('3','http://status.opentable.com/')">OpenTable Status</a>
-								<a onclick="loadStream('3','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</a>
-								<a onclick="loadStream('3','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</a>
-								<a onclick="loadStream('3','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</a>
-								<a onclick="loadStream('3','https://www.moodica.com')">Moodica</a>
-								<div class="custom_stream">
-                  <a onclick="toggleCustomStream('3')" id="custom_stream_3">Custom Frame 3</a>
-                  <input class="stream_edit_field" type="text" id="stream_edit_name_3"></input>
-									<div class="stream_save_button" id="custom_save_button_3" onclick="saveEditForm('3')">SAVE</div>
-                  <div class="stream_edit_button" onclick="showEditForm('3')" id="stream_edit_button_3">EDIT</div>
-                </div>
-							</div>
+						<div class="dropdown" id="collapsible_dropdown" onclick="showStreamSelector('3')">
+      			  <button class="dropbtn">+</button>
       			</div>
   				<div class="app-logo" onclick="clickCount()">
   					<img src="http://zerorestaurantcharleston.com/wp-content/uploads/sites/3/2016/04/OpenTableLogoWhite-e1473958158307.png" alt="OT_logo" class="logo">
   				</div>
-	        </div>
+        </div>
 	    </header>
-
 		<div id="popup_alert">
 			<div id="popup_message"></div>
 			<svg id="popup_message_close" viewBox="0 0 13 13" data-qa="close" onclick="closePopupMessage()">
@@ -890,19 +863,74 @@
 				<polyline class="gui-close" fill="none" stroke="currentColor" points="1 12,6.5 6.5,12 12"></polyline>
 			</svg>
 		</div>
-
 		<div class="view-pane" id="main_view_pane">
-
 			<iframe class="results" name="form_results_iframe1" id="form_results_iframe1">
 			</iframe>
+			<div class="stream_selector" id="stream_selector_1">
+				<div class="stream_selector_title">Choose Your Stream for Frame 1</div>
+				<a onclick="toggleRightSide()" class="stream_primary_selector" id="left_primary_button">Make Primary</a>
+				<div class="stream_grid">
+					<div class="stream" id="" onclick="loadStream('1','http://www.youtube.com/')">YouTube</div>
+					<div class="stream" id="" onclick="loadStream('1','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</div>
+					<div class="stream" id="" onclick="loadStream('1','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</div>
+					<div class="stream" id="" onclick="loadStream('1','http://status.opentable.com/')">Product Status</div>
+					<div class="stream" id="" onclick="loadStream('1','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</div>
+					<div class="stream" id="" onclick="loadStream('1','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</div>
+					<div class="stream" id="" onclick="loadStream('1','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</div>
+					<div class="stream" id="" onclick="loadStream('1','https://www.moodica.com')">Moodica</div>
+					<div class="stream" style="border-color:#da3743">
+						<a onclick="toggleCustomStream('1')" id="custom_stream_1">Custom Frame 1</a>
+						<input class="stream_edit_field" type="text" id="stream_edit_url_1" value="Enter the Url"></input>
+						<input class="stream_edit_field" type="text" id="stream_edit_name_1" value="Enter a Title"></input>
 
+						<div class="stream_save_button" id="custom_save_button_1" onclick="saveEditForm('1')">SAVE</div>
+						<div class="stream_edit_button" onclick="showEditForm('1')" id="stream_edit_button_1">EDIT</div>
+					</div>
+				</div>
+			</div>
+			<div class="stream_selector" id="stream_selector_2">
+				<div class="stream_selector_title">Choose Your Stream for Frame 2</div>
+				<a onclick="toggleLeftSide()" class="stream_primary_selector" id="right_primary_button">Make Primary</a>
+				<div class="stream_grid">
+					<div class="stream" id="" onclick="loadStream('2','http://www.youtube.com/')">YouTube</div>
+					<div class="stream" id="" onclick="loadStream('2','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</div>
+					<div class="stream" id="" onclick="loadStream('2','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</div>
+					<div class="stream" id="" onclick="loadStream('2','http://status.opentable.com/')">Product Status</div>
+					<div class="stream" id="" onclick="loadStream('2','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</div>
+					<div class="stream" id="" onclick="loadStream('2','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</div>
+					<div class="stream" id="" onclick="loadStream('2','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</div>
+					<div class="stream" id="" onclick="loadStream('2','https://www.moodica.com')">Moodica</div>
+					<div class="stream" style="border-color:#da3743">
+						<a onclick="toggleCustomStream('2')" id="custom_stream_2">Custom Frame 2</a>
+						<input class="stream_edit_field" type="text" id="stream_edit_url_2"></input>
+						<div class="stream_save_button" id="custom_save_button_2" onclick="saveEditForm('2')">SAVE</div>
+						<div class="stream_edit_button" onclick="showEditForm('2')" id="stream_edit_button_2">EDIT</div>
+					</div>
+				</div>
+			</div>
+			<div class="stream_selector" id="stream_selector_3">
+				<div class="stream_selector_title" style="">Choose Your Stream for Frame 3</div>
+				<div class="stream_grid">
+					<div class="stream" id="" onclick="loadStream('3','http://www.youtube.com/')">YouTube</div>
+					<div class="stream" id="" onclick="loadStream('3','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</div>
+					<div class="stream" id="" onclick="loadStream('3','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</div>
+					<div class="stream" id="" onclick="loadStream('3','http://status.opentable.com/')">Product Status</div>
+					<div class="stream" id="" onclick="loadStream('3','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</div>
+					<div class="stream" id="" onclick="loadStream('3','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</div>
+					<div class="stream" id="" onclick="loadStream('3','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</div>
+					<div class="stream" id="" onclick="loadStream('3','https://www.moodica.com')">Moodica</div>
+					<div class="stream" style="border-color:#da3743">
+						<a onclick="toggleCustomStream('3')" id="custom_stream_3">Custom Frame 3</a>
+						<input class="stream_edit_field" type="text" id="stream_edit_url_3"></input>
+						<div class="stream_save_button" id="custom_save_button_3" onclick="saveEditForm('3')">SAVE</div>
+						<div class="stream_edit_button" onclick="showEditForm('3')" id="stream_edit_button_3">EDIT</div>
+					</div>
+				</div>
+			</div>
 								<!--right-side-->
-
 			<iframe class="results" name="form_results_iframe2" id="form_results_iframe2">
 			</iframe>
-
 								<!--collaspable-->
-
 			<iframe class="results_collapsible" name="collapsible" id="form_results_iframe3">
 			</iframe>
 			<div class="egg" id="easter" style="margin:auto;">
