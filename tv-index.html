@@ -10,19 +10,17 @@
 
 			function showStreamSelector(id) {
 				if(document.getElementById("stream_selector_" + id).style.display = "none") {
+					document.getElementById('form_results_iframe1').style.display = "none";
+					document.getElementById('form_results_iframe2').style.display = "none";
+					document.getElementById('form_results_iframe3').style.display = "none";
+
 					document.getElementById("stream_selector_" + id).style.display = "flex";
 				} else {
 					document.getElementById("stream_selector_" + id).style.display = "none";
 				}
-				toggleElement('form_results_iframe1');
-				toggleElement('form_results_iframe2');
-				if(document.getElementById('form_results_iframe3').style.display = "none") {
-					// toggleElement('form_results_iframe3');
+				if(Cookies.get('stream' + id) != '') {
 
 				}
-
-				//cause the non-active dropdown buttons to grey out
-
 
 
 
@@ -82,18 +80,19 @@
 				document.getElementById('form_results_iframe' + id).style.display = "flex";
 				if (id == '1') {
 					form_results_iframe1.location.href = url;
-					// document.getElementById('form_results_iframe2').style.display = 'flex';
+					document.getElementById('form_results_iframe2').style.display = 'flex';
 				} else if (id == '2') {
 					form_results_iframe2.location.href = url;
 					document.getElementById('form_results_iframe1').style.display = 'flex';
 				} else if (id == '3') {
 					collapsible.location.href = url;
-					document.getElementById('form_results_iframe3').style.display = 'flex';
 					document.getElementById('form_results_iframe1').style.display = 'flex';
 					document.getElementById('form_results_iframe2').style.display = 'flex';
+					document.getElementById('form_results_iframe3').style.display = 'flex';
 				} else {
 					console.log('err');
 				}
+				Cookies.set('stream' + id, url, {expires:1});
 			}
       function toggleCustomStream(id) {
 				var url;
@@ -160,7 +159,7 @@
 				document.getElementById('stream_selector_1').style.display = "none";
 				document.getElementById('stream_selector_2').style.display = "none";
 				document.getElementById('stream_selector_3').style.display = "none";
-				
+
 		    myGamePiece = new component(30, 30, "red", 10, 120);
 		    myGamePiece.gravity = 0.05;
 		    myScore = new component("30px", "Consolas", "white", 280, 40, "text");
