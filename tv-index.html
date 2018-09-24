@@ -76,7 +76,7 @@
 				var iframe2 = document.getElementById('form_results_iframe2');
 				var iframe3 = document.getElementById('form_results_iframe3');
 				if (id == '1') {
-					if (document.getElementById('stream_primary_selector1').checked == 'null') {
+					if (document.getElementById('stream_primary_selector1').value == 'null') {
 						iframe2.style.display = 'flex';
 					} else {
 						iframe2.style.display = 'none';
@@ -84,7 +84,7 @@
 					iframe1.style.display = 'flex';
 					form_results_iframe1.location.href = url;
 				} else if (id == '2') {
-					if (document.getElementById('stream_primary_selector2').checked == 'null') {
+					if (document.getElementById('stream_primary_selector2').value == 'null') {
 						iframe1.style.display = 'flex';
 					} else {
 						iframe1.style.display = 'none';
