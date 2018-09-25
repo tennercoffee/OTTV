@@ -13,6 +13,8 @@
 					document.getElementById('frame1').style.display = "none";
 					document.getElementById('frame2').style.display = "none";
 					document.getElementById('frame3').style.display = "none";
+					document.getElementById('frame4').style.display = "none";
+
 					document.getElementById("stream_selector_" + id).style.display = "flex";
 				} else {
 					document.getElementById("stream_selector_" + id).style.display = "none";
@@ -78,41 +80,29 @@
 					console.log(primary);
 				}
 
-				if (id == '1') {
-					if (primary !== 'on' ) {
-						iframe2.style.display = 'flex';
-						console.log('log!1');
-					} else {
-						iframe2.style.display = 'none';
-						console.log('log!2');
-					}
-					iframe1.style.display = 'flex';
+				iframe1.style.display = 'flex';
+
+				iframe2.style.display = 'flex';
+
+				if(id == '3' || id == '4') {
+					iframe3.style.display = 'flex';
+
+					iframe4.style.display = 'flex';
+				}
+
+
+				if(id == '1') {
 					frame1.location.href = url;
 				} else if (id == '2') {
-					if (primary !== 'on' ) {
-						iframe1.style.display = 'flex';
-						console.log('log!3');
-					} else {
-						iframe1.style.display = 'none';
-						console.log('log!4');
-					}
-					iframe2.style.display = 'flex';
 					frame2.location.href = url;
 				} else if (id == '3') {
-					iframe1.style.display = 'flex';
-					iframe2.style.display = 'flex';
-					iframe3.style.display = 'flex';
-					iframe4.style.display = 'flex';
 					collapsible1.location.href = url;
 				} else if (id == '4') {
-					iframe1.style.display = 'flex';
-					iframe2.style.display = 'flex';
-					iframe3.style.display = 'flex';
-					iframe4.style.display = 'flex';
 					collapsible2.location.href = url;
 				} else {
-					console.log('err');
 				}
+
+
 				document.getElementById('stream_selector_' + id).style.display = "none";
 
 				val = 'off';
