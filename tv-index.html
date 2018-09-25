@@ -7,16 +7,13 @@
 		<link rel="shortcut icon" href="https://guestcenter.opentable.com/Content/img/icons/favicon.ico?v=gc-microapp-login-101" />
 		<script>
 			var profile_name,val1,val2;
-			document.getElementById('stream_primary_selector1').checked = 'null';
-			document.getElementById('stream_primary_selector2').checked = 'null';
 
 			function showStreamSelector(id) {
 				if(document.getElementById("stream_selector_" + id).style.display = "none") {
-					document.getElementById('form_results_iframe1').style.display = "none";
-					document.getElementById('form_results_iframe2').style.display = "none";
-					document.getElementById('form_results_iframe3').style.display = "none";
+					document.getElementById('frame1').style.display = "none";
+					document.getElementById('frame2').style.display = "none";
+					document.getElementById('frame3').style.display = "none";
 					document.getElementById("stream_selector_" + id).style.display = "flex";
-
 				} else {
 					document.getElementById("stream_selector_" + id).style.display = "none";
 				}
@@ -45,7 +42,6 @@
 				document.getElementById("sidebar").style.display = "block";
 				document.getElementById("sidebar_menu").style.display = "block";
 				document.getElementById("main_view_pane").style.opacity = "0.5";
-
 			}
 			function reloadPage() {
 				document.location.reload();
@@ -72,34 +68,51 @@
 				document.getElementById('custom_save_button_' + id).style.display = "block";
       }
 			function loadStream(id,url) {
-				var iframe1 = document.getElementById('form_results_iframe1');
-				var iframe2 = document.getElementById('form_results_iframe2');
-				var iframe3 = document.getElementById('form_results_iframe3');
+				var iframe1 = document.getElementById('frame1');
+				var iframe2 = document.getElementById('frame2');
+				var iframe3 = document.getElementById('frame3');
+				var iframe4 = document.getElementById('frame4');
+				var primary;
+				if(id < '3') {
+					primary = document.getElementById('stream_primary_selector' + id).value;
+					console.log(primary);
+				}
+
 				if (id == '1') {
-					if (document.getElementById('stream_primary_selector1').value == 'null') {
+					if (primary !== 'on' ) {
 						iframe2.style.display = 'flex';
+						console.log('log!1');
 					} else {
 						iframe2.style.display = 'none';
+						console.log('log!2');
 					}
 					iframe1.style.display = 'flex';
-					form_results_iframe1.location.href = url;
+					frame1.location.href = url;
 				} else if (id == '2') {
-					if (document.getElementById('stream_primary_selector2').value == 'null') {
+					if (primary !== 'on' ) {
 						iframe1.style.display = 'flex';
+						console.log('log!3');
 					} else {
 						iframe1.style.display = 'none';
+						console.log('log!4');
 					}
 					iframe2.style.display = 'flex';
-					form_results_iframe2.location.href = url;
+					frame2.location.href = url;
 				} else if (id == '3') {
 					iframe1.style.display = 'flex';
 					iframe2.style.display = 'flex';
 					iframe3.style.display = 'flex';
-					collapsible.location.href = url;
+					iframe4.style.display = 'flex';
+					collapsible1.location.href = url;
+				} else if (id == '4') {
+					iframe1.style.display = 'flex';
+					iframe2.style.display = 'flex';
+					iframe3.style.display = 'flex';
+					iframe4.style.display = 'flex';
+					collapsible2.location.href = url;
 				} else {
 					console.log('err');
 				}
-
 				document.getElementById('stream_selector_' + id).style.display = "none";
 
 				val = 'off';
@@ -107,12 +120,13 @@
 			}
       function toggleCustomStream(id) {
 				var url;
+				var primary = null;
 
-				if (id == '3' && document.getElementById('form_results_iframe3').style.display == 'none') {
-					document.getElementById('form_results_iframe3').style.display = 'block';
-					document.getElementById('collapsible_dropdown').style.display = 'block';
+				if (id == '3' && document.getElementById('frame3').style.display == 'none') {
+					document.getElementById('frame3').style.display = 'block';
+					document.getElementById('dropdown3').style.display = 'block';
 				} else {
-					document.getElementById('form_results_iframe3').style.display = 'none';
+					document.getElementById('frame3').style.display = 'none';
 				}
 
 				if(document.getElementById('stream_edit_url_' + id).value == ''  && Cookies.get('custom_stream_' + id) != null) {
@@ -120,7 +134,7 @@
 				} else if (document.getElementById('stream_edit_url_' + id).value != '') {
 					url = document.getElementById('stream_edit_url_' + id).value
 				}
-				loadStream(id,url);
+				loadStream(id,url,primary);
       }
 			function toggleElement(x) {
 			  console.log(x);
@@ -131,10 +145,10 @@
 			  }
 			}
 			function toggleLeftSide() {
-			  toggleElement("form_results_iframe1");
+			  toggleElement("frame1");
 			}
 			function toggleRightSide() {
-			  toggleElement("form_results_iframe2");
+			  toggleElement("frame2");
 			}
 		</script>
 		<script>
@@ -162,8 +176,8 @@
 			}
 
 			function startGame() {
-				document.getElementById('form_results_iframe1').style.display = "none";
-				document.getElementById('form_results_iframe2').style.display = "none";
+				document.getElementById('frame1').style.display = "none";
+				document.getElementById('frame2').style.display = "none";
 				document.getElementById('accelerate_button').style.display = "block";
 				document.getElementById('reset_button').style.display = "block";
 				document.getElementById('scoreboard').style.display = "block";
@@ -351,7 +365,7 @@
 			width: 65%;
 			margin-top: 6px;
 		}
-		#collapsible_dropdown {
+		#dropdown_3 {
 			position: absolute;
 			right: 0;
 			width: 100px;
@@ -393,6 +407,16 @@
 			width:200px;
 			font-size: 40px;
 		}
+		#dropdown3 {
+			width:100px;
+			position:absolute;
+			left:calc(10% - 50px);
+		}
+		#dropdown4 {
+			width:100px;
+			position:absolute;
+			right:calc(10% - 50px);
+		}
 		.footer {
 		    position: fixed;
 		    left: 0;
@@ -402,18 +426,24 @@
 		    border-radius:0px;
 			margin-bottom:5px;
 		}
-		#form_results_iframe1 {
+		#frame1 {
 			border-right:1px grey solid;
+		}
+		#frame3 {
+			left:5px;
+		}
+		#frame4 {
+
 		}
 		#form-panel2 .dropdown-content {
 			right:0;
 		}
-		#form_results_iframe2 {
+		#frame2 {
 			display:none;
 			margin-right: 5px;
 			border-left:1px grey solid;
 		}
-		#form_results_iframe3 {
+		#frame3 {
 			border-left:1px grey solid;
 		}
 		.help {
@@ -498,7 +528,7 @@
 			padding: 12px 12px 12px 0;
 			display: inline-block;
 		}
-		#left_dropdown {
+		#dropdown1 {
 			left:calc(25% - 100px);
 		}
 		#main_view_pane {
@@ -579,7 +609,7 @@
 			display: none;
 			background-color:white;
 		}
-    #right_dropdown {
+    #dropdown2 {
       position:absolute;
       right:calc(25% - 100px);
     }
@@ -812,13 +842,13 @@
 			}
 		}
 		@media screen and (max-width: 800px) {
-			#form_results_iframe2 {
+			#frame2 {
 				display:none;
 			}
-			#right_dropdown {
+			#dropdown2 {
 				display:none;
 			}
-			#left_dropdown {
+			#dropdown1 {
 				left: 25px;
 			}
 			.app-logo {
@@ -835,7 +865,7 @@
 			#form-panel2 {
 				display:flex;
 			}
-			#form_results_iframe2 {
+			#frame2 {
 				display:flex;
 			}
 			.stream_selector {
@@ -846,7 +876,7 @@
 			.stream_selector {
 				width:97%;
 			}
-			#collapsible_dropdown {
+			#dropdown3 {
 				display:block;
 			}
 			.stream_primary_selector {
@@ -861,14 +891,17 @@
 	<body>
 	    <header>
 	        <div class="header-flex">
-            <div class="dropdown" id="left_dropdown" onclick="showStreamSelector('1')">
-      			  <button class="dropbtn">+</button>
+            <div class="dropdown" id="dropdown1" onclick="showStreamSelector('1')">
+      			  <button class="dropbtn">#1</button>
       			</div>
-            <div class="dropdown" id="right_dropdown" onclick="showStreamSelector('2')">
-      			  <button class="dropbtn">+</button>
+            <div class="dropdown" id="dropdown2" onclick="showStreamSelector('2')">
+      			  <button class="dropbtn">#2</button>
       			</div>
-						<div class="dropdown" id="collapsible_dropdown" onclick="showStreamSelector('3')">
-      			  <button class="dropbtn">+</button>
+						<div class="dropdown" id="dropdown3" onclick="showStreamSelector('3')">
+      			  <button class="dropbtn">#3</button>
+      			</div>
+						<div class="dropdown" id="dropdown4" onclick="showStreamSelector('4')">
+      			  <button class="dropbtn">#4</button>
       			</div>
   				<div class="app-logo" onclick="clickCount()">
   					<img src="http://zerorestaurantcharleston.com/wp-content/uploads/sites/3/2016/04/OpenTableLogoWhite-e1473958158307.png" alt="OT_logo" class="logo">
@@ -882,8 +915,10 @@
 				<polyline class="gui-close" fill="none" stroke="currentColor" points="1 12,6.5 6.5,12 12"></polyline>
 			</svg>
 		</div>
+
 		<div class="view-pane" id="main_view_pane">
-			<iframe class="results" name="form_results_iframe1" id="form_results_iframe1">
+			<!-- frame 1 -->
+			<iframe class="results" name="frame1" id="frame1">
 			</iframe>
 			<div class="stream_selector" id="stream_selector_1">
 				<div class="stream_selector_title">Choose Your Stream for Frame 1</div>
@@ -917,14 +952,14 @@
 					<input type="checkbox" id="stream_primary_selector2" class="stream_primary_selector" style="position:absolute;top: 30px;right: 180px;">
 				</label>
 				<div class="stream_grid">
-					<div class="stream" id="" onclick="loadStream('2','http://www.youtube.com/')">YouTube</div>
-					<div class="stream" id="" onclick="loadStream('2','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</div>
-					<div class="stream" id="" onclick="loadStream('2','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</div>
-					<div class="stream" id="" onclick="loadStream('2','http://status.opentable.com/')">Product Status</div>
-					<div class="stream" id="" onclick="loadStream('2','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</div>
-					<div class="stream" id="" onclick="loadStream('2','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</div>
-					<div class="stream" id="" onclick="loadStream('2','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</div>
-					<div class="stream" id="" onclick="loadStream('2','https://www.moodica.com')">Moodica</div>
+					<div class="stream" id="" onclick="loadStream('2','http://www.youtube.com/',document.getElementById('stream_primary_selector2').value)">YouTube</div>
+					<div class="stream" id="" onclick="loadStream('2','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0',document.getElementById('stream_primary_selector2').value)">Incidents</div>
+					<div class="stream" id="" onclick="loadStream('2','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now',document.getElementById('stream_primary_selector2').value)">Server Stats</div>
+					<div class="stream" id="" onclick="loadStream('2','http://status.opentable.com/',document.getElementById('stream_primary_selector2').value)">Product Status</div>
+					<div class="stream" id="" onclick="loadStream('2','http://sc-na-ota-12-01.otsql.opentable.com:8080',document.getElementById('stream_primary_selector2').value)">KillerB</div>
+					<div class="stream" id="" onclick="loadStream('2','https://www.merriam-webster.com/word-of-the-day',document.getElementById('stream_primary_selector2').value)">Word of the Day</div>
+					<div class="stream" id="" onclick="loadStream('2','https://weather.com/weather/today/l/USCO0445:1:US',document.getElementById('stream_primary_selector2').value)">Weather</div>
+					<div class="stream" id="" onclick="loadStream('2','https://www.moodica.com',document.getElementById('stream_primary_selector2').value)">Moodica</div>
 					<div class="stream" style="border-color:#da3743">
 						<a onclick="toggleCustomStream('2')" class="customs_stream_name" id="custom_stream_2">Custom Frame 2</a>
 						<input class="stream_edit_field" type="text" id="stream_edit_url_2"></input>
@@ -952,12 +987,35 @@
 					</div>
 				</div>
 			</div>
-								<!--right-side-->
-			<iframe class="results" name="form_results_iframe2" id="form_results_iframe2">
+			<div class="stream_selector" id="stream_selector_4">
+				<div class="stream_selector_title" style="">Choose Your Stream for Frame 4</div>
+				<div class="stream_grid">
+					<div class="stream" id="" onclick="loadStream('4','http://www.youtube.com/')">YouTube</div>
+					<div class="stream" id="" onclick="loadStream('4','https://docs.google.com/spreadsheets/d/1t8KswAd92x52CsNcz5Kz5DvmnZ1ggFZdLOecLPM3eEM/edit#gid=0')">Incidents</div>
+					<div class="stream" id="" onclick="loadStream('4','https://dashboard.otenv.com/dashboard/db/system-metrics-redis_frontendnode-prod-sc?refresh=5m&orgId=1&from=now-3h&to=now')">Server Stats</div>
+					<div class="stream" id="" onclick="loadStream('4','http://status.opentable.com/')">Product Status</div>
+					<div class="stream" id="" onclick="loadStream('4','http://sc-na-ota-12-01.otsql.opentable.com:8080')">KillerB</div>
+					<div class="stream" id="" onclick="loadStream('4','https://www.merriam-webster.com/word-of-the-day')">Word of the Day</div>
+					<div class="stream" id="" onclick="loadStream('4','https://weather.com/weather/today/l/USCO0445:1:US')">Weather</div>
+					<div class="stream" id="" onclick="loadStream('4','https://www.moodica.com')">Moodica</div>
+					<div class="stream" style="border-color:#da3743">
+						<a onclick="toggleCustomStream('4')" class="customs_stream_name" id="custom_stream_4">Custom Frame 4</a>
+						<input class="stream_edit_field" type="text" id="stream_edit_url_4"></input>
+						<div class="stream_save_button" id="custom_save_button_4" onclick="saveEditForm('4')">SAVE</div>
+						<div class="stream_edit_button" onclick="showEditForm('4')" id="stream_edit_button_4">EDIT</div>
+					</div>
+				</div>
+			</div>
+								<!--frame 2-->
+			<iframe class="results" name="frame2" id="frame2">
 			</iframe>
-								<!--collaspable-->
-			<iframe class="results_collapsible" name="collapsible" id="form_results_iframe3">
+								<!--frame 3-->
+			<iframe class="results_collapsible" name="collapsible1" id="frame3">
 			</iframe>
+								<!--frame 4-->
+			<iframe class="results_collapsible" name="collapsible2" id="frame4">
+			</iframe>
+								<!-- hello  -->
 			<div class="egg" id="easter" style="margin:auto;">
 				<div id="game">
 				</div>
