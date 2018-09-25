@@ -6,15 +6,26 @@
 		<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 		<link rel="shortcut icon" href="https://guestcenter.opentable.com/Content/img/icons/favicon.ico?v=gc-microapp-login-101" />
 		<script>
-			var profile_name,val1,val2;
+			var profile_name,val1,val2,val3,val4;
 
 			function showStreamSelector(id) {
 				if(document.getElementById("stream_selector_" + id).style.display = "none") {
-					document.getElementById('frame1').style.display = "none";
-					document.getElementById('frame2').style.display = "none";
-					document.getElementById('frame3').style.display = "none";
-					document.getElementById('frame4').style.display = "none";
-
+					if (document.getElementById('frame1').style.display != "none") {
+						document.getElementById('frame1').style.display = "none";
+						val1 = 'on';
+					}
+					if (document.getElementById('frame2').style.display != "none") {
+						document.getElementById('frame2').style.display = "none";
+						val2 = 'on';
+					}
+					if (document.getElementById('frame3').style.display != "none") {
+						document.getElementById('frame3').style.display = "none";
+						val3 = 'on';
+					}
+					if (document.getElementById('frame4').style.display != "none") {
+						document.getElementById('frame4').style.display = "none";
+						val4 = 'on';
+					}
 					document.getElementById("stream_selector_" + id).style.display = "flex";
 				} else {
 					document.getElementById("stream_selector_" + id).style.display = "none";
@@ -80,14 +91,18 @@
 					console.log(primary);
 				}
 
-				iframe1.style.display = 'flex';
-
-				iframe2.style.display = 'flex';
-
-				if(id == '3' || id == '4') {
+				if (val1 == 'on') {
+					iframe1.style.display = 'flex';
+				}
+				if (val2 == 'on') {
+					iframe2.style.display = 'flex';
+				}
+				if(val3 == 'on') {
 					iframe3.style.display = 'flex';
-
+				}
+				if (val4 == 'on') {
 					iframe4.style.display = 'flex';
+				} else {
 				}
 
 
